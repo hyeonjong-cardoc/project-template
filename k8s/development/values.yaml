@@ -4,10 +4,24 @@ image:
   repository: registry.cardoc.co.kr/test/project-template/dev
   tag: latest
 
+imagePullSecrets:
+  - name: registry-cardoc
+
 ingress:
+  enabled: true
   hosts:
-    - host: test-2048.dev.cardoc.co.kr
-      paths: ['/']
+    - host: test-2048.cardoc.co.kr
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+          
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      if ($http_x_forwarded_proto != 'https') { 
+        return 301 https://$host$request_uri;
+      }
+
   # tls:
   #   - secretName: platform-api-dev-tls
   #     hosts:

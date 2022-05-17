@@ -1,0 +1,24 @@
+replicaCount: 1
+
+image:
+  repository: registry.cardoc.co.kr/test/project-template/dev
+  tag: latest
+
+ingress:
+  hosts:
+    - host: test-2048.dev.cardoc.co.kr
+      paths: ['/']
+  # tls:
+  #   - secretName: platform-api-dev-tls
+  #     hosts:
+  #       - platform.dev.cardoc.co.kr
+
+# datadog:
+#   service: 'platform-api-dev'
+#   env: 'development'
+
+env:
+  NODE_ENV: 'development'
+
+hpa:
+  enabled: false
